@@ -584,8 +584,18 @@ function propagateItemsByPositionIndex(arr) {
  *    shiftArray(['a', 'b', 'c', 'd'], -1) => ['b', 'c', 'd', 'a']
  *    shiftArray([10, 20, 30, 40, 50], -3) => [40, 50, 10, 20, 30]
  */
-function shiftArray(/* arr, n */) {
-  throw new Error('Not implemented');
+function shiftArray(arr, n) {
+  const { length } = arr;
+
+  if (length === 0 || n === 0) {
+    return arr;
+  }
+
+  const shiftedArray = arr.map(
+    (_, i) => arr[(i - (n % length) + length) % length]
+  );
+
+  return shiftedArray;
 }
 
 /**
@@ -601,8 +611,27 @@ function shiftArray(/* arr, n */) {
  *   sortDigitNamesByNumericOrder([ 'nine','eight','nine','eight' ]) => [ 'eight','eight','nine','nine']
  *   sortDigitNamesByNumericOrder([ 'one','one','one','zero' ]) => [ 'zero','one','one','one' ]
  */
-function sortDigitNamesByNumericOrder(/* arr */) {
-  throw new Error('Not implemented');
+function sortDigitNamesByNumericOrder(arr) {
+  if (!Array.isArray(arr)) {
+    throw new Error('Invalid input. Please provide an array.');
+  }
+
+  const digitNamesOrder = [
+    'zero',
+    'one',
+    'two',
+    'three',
+    'four',
+    'five',
+    'six',
+    'seven',
+    'eight',
+    'nine',
+  ];
+
+  return arr
+    .slice()
+    .sort((a, b) => digitNamesOrder.indexOf(a) - digitNamesOrder.indexOf(b));
 }
 
 /**
@@ -624,8 +653,19 @@ function sortDigitNamesByNumericOrder(/* arr */) {
  *   swapHeadAndTail([]) => []
  *
  */
-function swapHeadAndTail(/* arr */) {
-  throw new Error('Not implemented');
+function swapHeadAndTail(arr) {
+  if (arr.length === 1 && arr[0] === 1) {
+    return [...arr];
+  }
+  const { length } = arr;
+  const middleIndex = Math.floor(length / 2);
+
+  const head = arr.slice(0, middleIndex);
+  const tail = arr.slice(-middleIndex);
+
+  return length % 2 === 0
+    ? tail.concat(head)
+    : tail.concat(arr[middleIndex], head);
 }
 
 module.exports = {
